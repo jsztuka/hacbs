@@ -10,7 +10,7 @@ on:
     branches: [ main ]
     paths:
       - clair-in-ci/**
-      - .github/workflows/clair-in-ci-db.yaml
+      - .github/workflows/docker-image.yml
 
 env:
   REGISTRY: quay.io/redhat-appstudio
