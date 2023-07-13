@@ -1,0 +1,30 @@
+name: Test - Clair in CI DB
+
+# This workflow builds latest database version of clair-in-ci and
+# pushes it to app-studio registry ahoj
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - clair-in-ci/**
+      - .github/workflows/clair-in-ci-db.yaml
+
+env:
+  REGISTRY: quay.io/redhat-appstudio
+  IMAGE_NAME: clair-in-ci
+  LATEST_TAG: latest
+  PREVIOUS_TAG: previous
+  GITHUB_TOKEN: ${{ secrets.CLAIR_TEST }}
+
+
+jobs:
+  build:
+    name: Build the new image
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: create pull request
+      run: gh pr create -B main -H STONE-485 --title 'Merge STONE-485 into main' --body 'Created by Github action'
