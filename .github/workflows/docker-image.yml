@@ -23,7 +23,11 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+      with:
+        ref: main
     - name: say hello
       run: echo "hello"
     - name: create pull request
-      run: gh pr create -B main -H STONE-485 --title 'Merge STONE-485 into main' --body 'Created by Github action'
+      run: gh pr create -B main -H simple --title 'Merge simple into main' --body 'Created by Github action'
