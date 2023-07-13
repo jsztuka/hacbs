@@ -8,9 +8,6 @@ on:
     - cron: '*/15 * * * *'
   pull_request:
     branches: [ main ]
-    paths:
-      - clair-in-ci/**
-      - .github/workflows/docker-image.yml
 
 env:
   REGISTRY: quay.io/redhat-appstudio
@@ -21,10 +18,12 @@ env:
 
 
 jobs:
-  build:
+  test:
     name: Build the new image
     runs-on: ubuntu-20.04
 
     steps:
+    - name: say hello
+      run: echo "hello"
     - name: create pull request
       run: gh pr create -B main -H STONE-485 --title 'Merge STONE-485 into main' --body 'Created by Github action'
