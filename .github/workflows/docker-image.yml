@@ -17,6 +17,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.CLAIR_TEST }}
   IS_CREATED: false
   OUTPUT_JSON: ""
+  PR_NUMBER: 0
   
 
 #gh pr create -B main -H tkn-sanity --title 'Merge tkn-sanity into main for clair-db' --body 'Created by Github action' --label clair-db
@@ -36,13 +37,17 @@ jobs:
     - name: create pull request
       run: |
           echo "PR is already created"
-          gh pr list --label clair-db
-          OUTPUT_JSON=$(gh pr view 7 --json state | jq -r '.state')
+          PR_NUMBER=$(gh pr list --label clair-db --json number | jq -r '.number')
+          if [ $PR_NUMBER -eq 0]; then
+            echo "creating new PR"
+            gh pr create -B main -H tkn-sanity --title 'Merge tkn-sanity into main for clair-db' --body 'Created by Github action' --label clair-db
+          fi
+          OUTPUT_JSON=$(gh pr view $PR_NUMBER --json state | jq -r '.state')
           echo $OUTPUT_JSON
           if [ "$OUTPUT_JSON" == "OPEN" ]; then
-            gh pr close 7
+            gh pr close $PR_NUMBER
             echo "PR has been closed"
           else
-            gh pr reopen 7
+            gh pr reopen $PR_NUMBER
             echo "PR has been opened"
           fi
