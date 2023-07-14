@@ -37,6 +37,7 @@ jobs:
     - name: create pull request
       run: |
           echo "PR is already created"
+          gh pr list --label clair-db --json number
           PR_NUMBER=$(gh pr list --label clair-db --json number | jq -r '.number')
           if [ $PR_NUMBER -eq 0]; then
             echo "creating new PR"
