@@ -39,6 +39,7 @@ jobs:
           if [ -z $PR_NUMBER ]; then
             echo "Creating new PR"
             gh pr create -B main -H alpha-v1 --title 'Merge alpha-v1 into main for clair-db' --body 'Created by Github action' --label clair-db
+            sleep 5
             PR_NUMBER=$(gh pr list --label clair-db --json number | jq -r '.[] | .number')
             echo $PR_NUMBER
           fi
@@ -54,6 +55,7 @@ jobs:
             echo "PR-number"
             gh pr reopen $PR_NUMBER
             echo "PR has been opened"
+            sleep 5
             gh pr close $PR_NUMBER
             echo "PR has been closed"
           fi
