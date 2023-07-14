@@ -39,4 +39,10 @@ jobs:
           gh pr list
           OUTPUT_JSON=$(gh pr view 7 --json state | jq -r '.state')
           echo $OUTPUT_JSON
-          echo "New PR has been created"
+          if [ $OUTPUT_JSON eq "OPEN" ]; then
+            gh pr close 7
+            echo "PR has been closed"
+          else
+            gp pr reopen 7
+            echo "PR has been opened"
+          fi
