@@ -4,10 +4,10 @@ name: Test - Clair in CI DB
 # pushes it to app-studio registry ahoj
 
 on:
-  schedule:
-    - cron: '*/15 * * * *'
-  #pull_request:
-  #  branches: [ main ]
+  #schedule:
+  #  - cron: '*/15 * * * *'
+  pull_request:
+    branches: [ main ]
 
 env:
   REGISTRY: quay.io/redhat-appstudio
