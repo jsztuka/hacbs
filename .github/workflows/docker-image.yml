@@ -36,9 +36,7 @@ jobs:
       run: |
           echo "Check if PR is already created."
           PR_NUMBER=$(gh pr list --label clair-db --json number | jq -r '.[] | .number')
-          echo "This is PR number"
-          echo $PR_NUMBER
-          if [ $PR_NUMBER == 0 ]; then
+          if [ -z $PR_NUMBER ]; then
             echo "Creating new PR"
             gh pr create -B main -H alpha-v1 --title 'Merge alpha-v1 into main for clair-db' --body 'Created by Github action' --label clair-db
             PR_NUMBER=$(gh pr list --label clair-db --json number | jq -r '.[] | .number')
