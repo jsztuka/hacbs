@@ -35,7 +35,7 @@ jobs:
       run: echo "hello"
     - name: create pull request
       run: |
-          gh pr create -B main -H simple --title 'Merge simple into main for clair-db' --body 'Created by Github action' --label clair-db
+          gh pr create -B main -H branch-1 --title 'Merge branch-1 into main for clair-db' --body 'Created by Github action' --label clair-db
           echo "PR is already created"
           gh pr list --label clair-db
           OUTPUT_JSON=$(gh pr view 7 --json state | jq -r '.state')
