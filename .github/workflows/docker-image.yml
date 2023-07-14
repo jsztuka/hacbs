@@ -16,6 +16,8 @@ env:
   PREVIOUS_TAG: previous
   GITHUB_TOKEN: ${{ secrets.CLAIR_TEST }}
   IS_CREATED: false
+  OUTPUT_JSON: ""
+  
 
 #gh pr create -B main -H simple --title 'Merge simple into main' --body 'Created by Github action'
 #if [ $? != 0 ]; then
@@ -34,5 +36,7 @@ jobs:
     - name: create pull request
       run: |
           echo "PR is already created"
-          gh pr view 7
+          gh pr view 7 --json > OUTPUT_JSON
+          echo $OUTPUT_JSON
+          echo $OUTPUT_JSON | jq -r '.state'
           echo "New PR has been created"
