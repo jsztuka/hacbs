@@ -39,7 +39,7 @@ jobs:
           echo "PR is already created"
           PR_NUMBER=$(gh pr list --label clair-db --json number | jq -r '.[] | .number')
           echo $PR_NUMBER
-          if [ $PR_NUMBER -eq 0]; then
+          if [ $PR_NUMBER -eq 0 ]; then
             echo "creating new PR"
             gh pr create -B main -H tkn-sanity --title 'Merge tkn-sanity into main for clair-db' --body 'Created by Github action' --label clair-db
           fi
