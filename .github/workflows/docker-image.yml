@@ -35,6 +35,7 @@ jobs:
     - name: create pull request
       run: |
           echo "PR is already created"
+          gh pr list
           gh pr view 7 --json state | jq -r '.state' > OUTPUT_JSON
           echo $OUTPUT_JSON
           echo "New PR has been created"
