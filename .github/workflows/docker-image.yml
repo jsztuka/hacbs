@@ -38,7 +38,7 @@ jobs:
           gh pr list --state all --label clair-db
           PR_NUMBER=$(gh pr list --label clair-db --json number | jq -r '.[0] | .number')
           echo $PR_NUMBER
-          if [ -z $PR_NUMBER ]; then
+          if [ -z "$PR_NUMBER" ] || [ "$PR_NUMBER" == null ]; then
             echo "Creating new PR"
             gh pr create -B main -H alpha-v1 --title 'Merge alpha-v1 into main for clair-db' --body 'Created by Github action' --label clair-db
             sleep 5
