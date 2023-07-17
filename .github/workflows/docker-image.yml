@@ -36,7 +36,7 @@ jobs:
       run: |
           echo "Check if PR is already created."
           gh pr list --state all --label clair-db
-          PR_NUMBER=$(gh pr list --state all --label clair-db --json number | jq -r '.[0] | .number')
+          PR_NUMBER=$(gh pr list --label clair-db --json number | jq -r '.[0] | .number')
           echo $PR_NUMBER
           if [ -z $PR_NUMBER ]; then
             echo "Creating new PR"
