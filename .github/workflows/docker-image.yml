@@ -16,7 +16,7 @@ env:
   PREVIOUS_TAG: previous
   GITHUB_TOKEN: ${{ secrets.CLAIR_TEST }}
   IS_CREATED: false
-  OUTPUT_JSON: ""
+  PR_STATE: ""
   PR_NUMBER: 0
   
 
@@ -35,29 +35,23 @@ jobs:
     - name: create pull request
       run: |
           echo "Check if PR is already created."
-          gh pr list --state all --label clair-db
-          PR_NUMBER=$(gh pr list --label clair-db --json number | jq -r '.[0] | .number')
-          echo $PR_NUMBER
+          PR_NUMBER=$(gh pr list --state all --label clair-db --json number | jq -r '.[0] | .number')
           if [ -z "$PR_NUMBER" ] || [ "$PR_NUMBER" == null ]; then
-            echo "Creating new PR"
+            echo "No existing PR with label clair-db was found. Creating a new PR..."
             gh pr create -B main -H alpha-v1 --title 'Merge alpha-v1 into main for clair-db' --body 'Created by Github action' --label clair-db
             sleep 5
-            PR_NUMBER=$(gh pr list --label clair-db --json number | jq -r '.[0] | .number')
-            echo $PR_NUMBER
+            PR_NUMBER=$(gh pr list --state all --label clair-db --json number | jq -r '.[0] | .number')
           fi
-          OUTPUT_JSON=$(gh pr view $PR_NUMBER --json state | jq -r '.state')
-          echo $OUTPUT_JSON
-          if [ "$OUTPUT_JSON" == "OPEN" ]; then
-            echo "PR-number"
-            echo $PR_NUMBER
+          PR_STATE=$(gh pr view $PR_NUMBER --json state | jq -r '.state')
+          if [ "$PR_STATE" == "OPEN" ]; then
+            echo "$PR_NUMBER is $PR_STATE, closing it now.
             gh pr close $PR_NUMBER
-            echo "PR has been closed"
+            echo "PR number: $PR_NUMBER has been closed."
           else
-            echo $PR_NUMBER
-            echo "PR-number"
+            echo "$PR_NUMBER is $PR_STATE, reopening it now.
             gh pr reopen $PR_NUMBER
-            echo "PR has been opened"
+            echo "PR number: $PR_NUMBER has been opened."
             sleep 5
             gh pr close $PR_NUMBER
-            echo "PR has been closed"
+            echo "PR number: $PR_NUMBER has been closed."
           fi
