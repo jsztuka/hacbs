@@ -50,7 +50,7 @@ jobs:
             gh pr close $PR_NUMBER
             echo "PR number: $PR_NUMBER has been closed."
           else
-            echo "$PR_NUMBER is $PR_STATE, reopening it now.
+            echo "$PR_NUMBER is $PR_STATE, reopening it now."
             gh pr reopen $PR_NUMBER
             echo "PR number: $PR_NUMBER has been opened."
             sleep 5
