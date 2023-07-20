@@ -25,6 +25,10 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+      with:
+        ref: main
     - name: create pull request
       run: |
           echo "Check if PR is already created."
