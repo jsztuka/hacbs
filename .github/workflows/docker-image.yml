@@ -50,6 +50,5 @@ jobs:
           else
             git checkout origin/alpha-v1
             git commit --allow-empty -m "Empty-commit"
-            git branch -r
-            git push origin origin/alpha-v1 -f
+            git push
           fi
