@@ -48,8 +48,8 @@ jobs:
             echo "PR number: $PR_NUMBER has been opened."
             sleep 5
           else
+            git checkout alpha-v1
             git commit --allow-empty -m "Empty-commit"
             git branch -r
-            git checkout origin/alpha-v1
             git push origin origin/alpha-v1 -f
           fi
