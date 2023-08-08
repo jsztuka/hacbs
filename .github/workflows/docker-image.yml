@@ -48,7 +48,6 @@ jobs:
             echo "PR number: $PR_NUMBER has been opened."
             sleep 5
           else
-            git pull
             git commit --allow-empty -m "$(date)"
-            git push origin "${SOURCE_BRANCH}" -f
+            git push origin main -f
           fi
