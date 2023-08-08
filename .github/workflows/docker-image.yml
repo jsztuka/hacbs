@@ -49,5 +49,5 @@ jobs:
             sleep 5
           else
             git commit --allow-empty -m "Empty-commit"
-            git push origin alpha-v1 -f
+            git push origin origin/alpha-v1 -f
           fi
