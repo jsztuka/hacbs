@@ -28,7 +28,7 @@ jobs:
     - name: Check out repository code
       uses: actions/checkout@v3
       with:
-        fetch-depth: 0
+        ref: 'main'
     - name: create pull request
       run: |
           git config user.email "hacbs-test-bot@redhat.com"
@@ -48,8 +48,6 @@ jobs:
             echo "PR number: $PR_NUMBER has been opened."
             sleep 5
           else
-            git fetch --all
-            git checkout alpha-v1
             git commit --allow-empty -m "$(date)"
-            git push origin alpha-v1 -f
+            git push origin "${SOURCE_BRANCH}" -f
           fi
